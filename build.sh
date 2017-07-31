@@ -21,6 +21,6 @@ echo "                                                                          
 
 echo " Starting building Jste Manager "
 
-dir=$(cd -P -- "$(dirname -- "$0")" && npm install && enclose -a $1 -v 6.3.1 -c config.js -o JsteManager index.js)
+dir=$(cd -P -- "$(dirname -- "$0")" && npm install && pkg .)
 
 echo " Jste Manager has been built properly ;) "
