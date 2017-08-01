@@ -11,17 +11,13 @@ app.use(cors())
 const currentPlatform = os.platform();
 const currentArch = os.arch();
 const root = path.join(__dirname, 'assets');
+const binPath = process.execPath;
 const optionDefinitions = [
   { name: 'install', alias: 'i', type: Boolean }
 ];
 const options = commandLineArgs(optionDefinitions);
 
 if (options.install) {
-figlet('Jste Manager', function(err, data) {
-console.log("");
-console.log("");
-console.log("");
-console.log(data);
 console.log("");
 console.log("");
 console.log("");
@@ -74,13 +70,12 @@ console.log(" Jste Manager has been installed successfuly ;) ");
 console.log("================================================");
 console.log("");
 } else if (currentPlatform == 'win32') {
-shell.cp('-R', 'JsteManager', 'C:\\users\\Public\\Start Menu\\Programs\\StartUp');
+shell.cp('-R', 'JsteManager.exe', '/ProgramData/Microsoft/Windows/Start Menu/Programs/StartUp');
 console.log("");
 console.log("");
 console.log("");
 console.log(" Launching Jste Manager ");
-shell.cd('/D', 'C:\\users\\Public\\Start Menu\\Programs\\StartUp');
-shell.exec('start "" JsteManager');
+shell.exec('start "" "/ProgramData/Microsoft/Windows/Start Menu/Programs/Startup/JsteManager.exe"');
 console.log("");
 console.log("");
 console.log("");
@@ -90,7 +85,6 @@ console.log(" Jste Manager has been installed successfuly ;) ");
 console.log("================================================");
 console.log("");
 }
-});
 }else {
 
 app.get('/', function (req, res) {

@@ -12,8 +12,7 @@
     "cors",
     "pkg",
     "shelljs",
-    "command-line-args",
-    "figlet"
+    "command-line-args"
   ],
   "repository": {
     "type": "git",
