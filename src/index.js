@@ -1,11 +1,11 @@
 const commandLineArgs = require('command-line-args')
 const os = require('os');
 const shell = require('shelljs');
-const figlet = require('figlet');
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
+const cors_proxy = require('cors-anywhere');
 const app = express();
 app.use(cors())
 const currentPlatform = os.platform();
@@ -87,10 +87,26 @@ console.log("");
 }
 }else {
 
-app.get('/', function (req, res) {
-  res.sendFile(root + '/index.html')
+app.get('/framework', function (req, res) {
+  res.sendFile(root + '/framework.html')
+});
+
+app.get('/webcomponents-loader', function (req, res) {
+  res.sendFile(root + '/webcomponents-lite.js')
+});
+
+app.get('/db-manager', function (req, res) {
+  res.sendFile(root + '/DBManager.html')
 });
 
 var server = app.listen(5050, function () {
+});
+
+cors_proxy.createServer({
+    originWhitelist: [], // Allow all origins
+    requireHeader: [],
+    setHeaders: {"Access-Control-Expose-Headers": "Content-Length"},
+    removeHeaders: ['cookie', 'cookie2']
+}).listen(6060, '0.0.0.0', function() {
 });
 }

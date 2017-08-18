@@ -11,8 +11,10 @@
     "express",
     "cors",
     "pkg",
+    "figlet",
     "shelljs",
-    "command-line-args"
+    "command-line-args",
+    "cors-anywhere"
   ],
   "repository": {
     "type": "git",
@@ -43,5 +45,6 @@
     "html",
     "css"
   ],
-  "author": "Jste Team"
+  "author": "Jste Team",
+  "homepage": "https://project-jste.github.io/"
 }
