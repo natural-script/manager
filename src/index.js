@@ -87,13 +87,7 @@ console.log("");
 }
 }else {
 
-app.get('/framework', function (req, res) {
-  res.sendFile(root + '/framework.html')
-});
-
-app.get('/webcomponents-loader', function (req, res) {
-  res.sendFile(root + '/webcomponents-lite.js')
-});
+app.use(express.static(root));
 
 app.get('/db-manager', function (req, res) {
   res.sendFile(root + '/DBManager.html')
