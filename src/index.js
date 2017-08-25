@@ -4,6 +4,7 @@ const shell = require('shelljs');
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
+const staticGzip = require('http-static-gzip-regexp');
 const cors = require('cors');
 const cors_proxy = require('cors-anywhere');
 const app = express();
@@ -87,20 +88,19 @@ console.log("");
 }
 }else {
 
-app.use(express.static(root));
+app.use(staticGzip(/(framework\.min\.html|\.js|\.css)$/));  
 
-app.get('/db-manager', function (req, res) {
-  res.sendFile(root + '/DBManager.html')
-});
+app.use(express.static(root));
 
 var server = app.listen(5050, function () {
 });
 
+var localAddress = '0.0.0.0' || 'localhost'; 
 cors_proxy.createServer({
     originWhitelist: [], // Allow all origins
     requireHeader: [],
     setHeaders: {"Access-Control-Expose-Headers": "Content-Length"},
     removeHeaders: ['cookie', 'cookie2']
-}).listen(6060, '0.0.0.0', function() {
+}).listen(6060, localAddress, function() {
 });
 }

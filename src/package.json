@@ -9,6 +9,7 @@
   },
   "dependencies": [
     "express",
+    "http-static-gzip-regexp",
     "cors",
     "pkg",
     "figlet",
