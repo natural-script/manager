@@ -1,4 +1,4 @@
-const commandLineArgs = require('command-line-args')
+const commandLineArgs = require('command-line-args');
 const os = require('os');
 const shell = require('shelljs');
 const fs = require('fs');
@@ -7,19 +7,19 @@ const express = require('express');
 const staticGzip = require('http-static-gzip-regexp');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const AppDirectory = require('appdirectory')
+const AppDirectory = require('appdirectory');
 const cors_proxy = require('cors-anywhere');
 const app = express();
 app.use(cors());
 app.use(bodyParser());
-const Store = require('server-store');
+const JsonDB = require('node-json-db');
 const dirs = new AppDirectory({
   appName: "JsteManager",
   appAuthor: "JsteTeam",
   appVersion: "v1.0.0"
 });
 const appConfigDir = dirs.userConfig();
-const managerConfigDB = new Store('JsteManager', 'Config', appConfigDir);
+const managerConfigDB = new JsonDB(appConfigDir + "/managerConfigDB", true, false);
 const currentPlatform = os.platform();
 const currentArch = os.arch();
 const root = path.join(__dirname, 'assets');
@@ -108,22 +108,28 @@ if (options.install) {
   var server = app.listen(5050, function () {});
 
   app.post('/setAdminPassword', function (req, res) {
-    if (managerConfigDB.getItem('adminPassword')) {
-      if (managerConfigDB.getItem('adminPassword') == req.body.oldPassword) {
-        managerConfigDB.setItem('adminPassword', req.body.newPassword);
+    if (managerConfigDB.getData('/').adminPassword) {
+      if (managerConfigDB.getData('/').adminPassword == req.body.oldPassword) {
+        managerConfigDB.push('/', {
+          adminPassword: req.body.newPassword
+        }, false);
         res.send('The admin password has been set successfuly ;)');
       } else {
         res.send('Authentication failed :(');
       }
     } else {
-      managerConfigDB.setItem('adminPassword', req.body.newPassword);
+      managerConfigDB.push('/', {
+        adminPassword: req.body.newPassword
+      },false);
       res.send('The admin password has been set successfuly ;)');
     }
   });
 
   app.post('/childModeActivate', function (req, res) {
-    if (req.body.adminPassword && req.body.adminPassword == managerConfigDB.getItem('adminPassword')) {
-      managerConfigDB.setItem('childMode', 'on');
+    if (req.body.adminPassword && req.body.adminPassword == managerConfigDB.getData('/').adminPassword) {
+      managerConfigDB.push('/', {
+        childMode: 'on'
+      }, false);
       res.send('Child mode has been activated successfuly ;)');
     } else {
       res.send('Authentication failed :(');
@@ -131,8 +137,10 @@ if (options.install) {
   });
 
   app.post('/childModeDeactivate', function (req, res) {
-    if (req.body.adminPassword && req.body.adminPassword == managerConfigDB.getItem('adminPassword')) {
-      managerConfigDB.setItem('childMode', 'off');
+    if (req.body.adminPassword && req.body.adminPassword == managerConfigDB.getData('/').adminPassword) {
+      managerConfigDB.push('/', {
+        childMode: 'off'
+      }, false);
       res.send('Child mode has been deactivated successfuly ;)');
     } else {
       res.send('Authentication failed :(');
@@ -140,11 +148,11 @@ if (options.install) {
   });
 
   app.get('/childModeStatus', function (req, res) {
-    res.send(managerConfigDB.getItem('childMode'));
+    res.send(managerConfigDB.getData('/').childMode);
   });
 
   app.get('/adminPasswordStatus', function (req, res) {
-    if (managerConfigDB.getItem('adminPassword')) {
+    if (managerConfigDB.getData('/').adminPassword) {
       res.send('set');
     } else {
       res.send('not set');
@@ -152,7 +160,7 @@ if (options.install) {
   });
 
   app.post('/adminPasswordVerification', function (req, res) {
-    if (managerConfigDB.getItem('adminPassword') == req.body.adminPassword) {
+    if (managerConfigDB.getData('/').adminPassword == req.body.adminPassword) {
       res.send('You have been logged in successfuly ;)');
     } else {
       res.send('Authentication failed :(');

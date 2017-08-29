@@ -12,7 +12,7 @@
     "http-static-gzip-regexp",
     "cors",
     "appdirectory",
-    "server-store",
+    "node-json-db",
     "body-parser",
     "pkg",
     "figlet",
