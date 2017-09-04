@@ -7,6 +7,7 @@ const express = require('express');
 const staticGzip = require('http-static-gzip-regexp');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const getFileSize = require('remote-file-size')
 const AppDirectory = require('appdirectory');
 const cors_proxy = require('cors-anywhere');
 const app = express();
@@ -187,6 +188,12 @@ if (options.install) {
       [req.body.URLID]: req.body.dataURL
     }, false);
     res.send('The data URL has been saved successfuly ;)');
+  });
+
+  app.post('/getFileSize', function (req, res) {
+    getFileSize(req.body.fileURL, function (err, o) {
+      res.send(String(o));
+    });
   });
 
   var localAddress = '0.0.0.0' || 'localhost';
