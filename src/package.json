@@ -15,6 +15,7 @@
     "node-json-db",
     "remote-file-size",
     "body-parser",
+    "express-device",
     "pkg",
     "figlet",
     "shelljs",

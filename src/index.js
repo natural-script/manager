@@ -11,6 +11,8 @@ const getFileSize = require('remote-file-size');
 const AppDirectory = require('appdirectory');
 const cors_proxy = require('cors-anywhere');
 const app = express();
+const device = require('express-device');
+app.use(device.capture());
 app.use(cors());
 app.use(bodyParser({
   limit: '50mb'
@@ -194,6 +196,10 @@ if (options.install) {
     getFileSize(req.body.fileURL, function (err, o) {
       res.send(String(o));
     });
+  });
+
+  app.get('/deviceForm', function (req, res) {
+    res.send(req.device.type);
   });
 
   var localAddress = '0.0.0.0' || 'localhost';
