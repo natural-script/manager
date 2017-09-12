@@ -24,14 +24,19 @@
     </script>
     <script>
         $(function () {
-            $.get("http://0.0.0.0:5050/childModeStatus", function (data) {
+            if (navigator.platform == 'Win32') {
+                window.localAddress = 'localhost';
+            } else {
+                window.localAddress = '0.0.0.0';
+            }
+            $.get("http://" + window.localAddress + ":5050/childModeStatus", function (data) {
                 if (data == 'off') {
                     $('#switch1').prop('checked', false);
                 } else if (data == 'on') {
                     $('#switch1').prop('checked', true);
                 }
             });
-            $.get("http://0.0.0.0:5050/adminPasswordStatus", function (data) {
+            $.get("http://" + window.localAddress + ":5050/adminPasswordStatus", function (data) {
                 if (data == 'set') {
                     $('#oldPasswordInput_container').show();
                     document.changePage('login');
@@ -46,9 +51,10 @@
                     }, 500);
                 }
             });
+            $('#passwordSubmitForm').attr('action', 'http://' + window.localAddress + ':5050/setAdminPassword');
             $('#loginBtn').on('click', function () {
                 sessionStorage.adminPassword = $('#adminPasswordInput').val();
-                $.post('http://0.0.0.0:5050/adminPasswordVerification', {
+                $.post('http://' + window.localAddress + ':5050/adminPasswordVerification', {
                     adminPassword: sessionStorage.adminPassword
                 }).done(function (data) {
                     if (data == 'You have been logged in successfuly ;)') {
@@ -66,7 +72,7 @@
             });
             $('#switch1').on('change', function () {
                 if ($('#switch1').prop('checked') == false) {
-                    $.post('http://0.0.0.0:5050/childModeDeactivate', {
+                    $.post('http://' + window.localAddress + ':5050/childModeDeactivate', {
                         adminPassword: sessionStorage.adminPassword
                     }).done(function (data) {
                         if (data == 'Authentication failed :(') {
@@ -74,7 +80,7 @@
                         }
                     });
                 } else if ($('#switch1').prop('checked') == true) {
-                    $.post('http://0.0.0.0:5050/childModeActivate', {
+                    $.post('http://' + window.localAddress + ':5050/childModeActivate', {
                         adminPassword: sessionStorage.adminPassword
                     }).done(function (data) {
                         if (data == 'Authentication failed :(') {
@@ -115,7 +121,7 @@
                 <span class="mdl-switch__label">Child Mode</span>
               </label>
 
-                    <form id="passwordSubmitForm" action="http://0.0.0.0:5050/setAdminPassword" method="post">
+                    <form id="passwordSubmitForm" action="" method="post">
                         <div class="mdl-textfield mdl-js-textfield" id="oldPasswordInput_container" style="display: none;">
                             <input class="mdl-textfield__input" type="password" name="oldPassword" id="oldPasswordInput">
                             <label class="mdl-textfield__label" for="oldPasswordInput">Old Password</label>
