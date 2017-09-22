@@ -1,7 +1,7 @@
 {
   "name": "JsteManager",
-  "version": "1.0.0",
-  "description": "The official Jste Manager",
+  "version": "0.1.0",
+  "description": "The official Jste Manager.",
   "main": "index.js",
   "bin": "index.js",
   "scripts": {
