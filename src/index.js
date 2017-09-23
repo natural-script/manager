@@ -6,6 +6,7 @@ const path = require('path');
 const express = require('express');
 const staticGzip = require('http-static-gzip-regexp');
 const cors = require('cors');
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const bodyParser = require('body-parser');
 const getFileSize = require('remote-file-size');
 const AppDirectory = require('appdirectory');
@@ -200,6 +201,26 @@ if (options.install) {
 
   app.get('/deviceForm', function (req, res) {
     res.send(req.device.type);
+  });
+  
+  app.post('/getVideoInfo', function (req, res) {
+    var request = new XMLHttpRequest();
+    request.open('POST', 'https://loadercdn.io/api/v1/create');
+  
+    request.setRequestHeader('Content-Type', 'application/json');
+  
+    request.onreadystatechange = function () {
+      if (this.readyState === 4) {
+        res.send(this.responseText);
+      }
+    };
+  
+    var body = {
+      'key': 'EatRoyUhJZVyhfI2V4dUNuwiDrTooY6T7fG5bQw',
+      'link': req.body.url
+    };
+  
+    request.send(JSON.stringify(body));
   });
 
   var localAddress = '0.0.0.0' || 'localhost';
