@@ -1,6 +1,6 @@
 const os = require('os');
-const shell = require('./src/node_modules/shelljs');
-const figlet = require('./src/node_modules/figlet');
+const shell = require('shelljs');
+const figlet = require('figlet');
 
 figlet('JSTE MANAGER', function(err, data) {
 console.log(data);

@@ -2,10 +2,12 @@
   "name": "JsteManager",
   "version": "0.1.0",
   "description": "The official Jste Manager.",
-  "main": "index.js",
-  "bin": "index.js",
+  "main": "src/index.js",
+  "bin": "src/index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node src/index.js",
+    "build": "node build.js",
+    "test": "node build.js"
   },
   "dependencies": [
     "express",
@@ -21,7 +23,9 @@
     "figlet",
     "shelljs",
     "command-line-args",
-    "cors-anywhere"
+    "cors-anywhere",
+    "serve-favicon",
+    "google-translate-api"
   ],
   "repository": {
     "type": "git",
