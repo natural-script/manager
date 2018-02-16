@@ -33,7 +33,7 @@
   },
   "pkg": {
     "assets": [
-      "assets/*"
+      "src/assets/*"
     ],
     "targets": [
       "node9-linux-x86",
