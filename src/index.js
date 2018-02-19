@@ -115,7 +115,7 @@ if (options.install) {
 } else {
 	app.use(staticGzip(/(framework\.min\.html)$/));
 	app.use(express.static(root));
-	var server = app.listen(5050, function () {});
+	var server = app.listen(5050);
 	app.post('/setAdminPassword', function (req, res) {
 		if (managerConfigDB.getData('/').adminPassword) {
 			if (managerConfigDB.getData('/').adminPassword == req.body.oldPassword) {
@@ -155,6 +155,36 @@ if (options.install) {
 	});
 	app.get('/childModeStatus', function (req, res) {
 		res.send(managerConfigDB.getData('/').childMode);
+	});
+	app.get('/adminPasswordStatus', function (req, res) {
+		if (managerConfigDB.getData('/').adminPassword) {
+			res.send('set');
+		} else {
+			res.send('not set');
+		}
+	});
+	app.post('/nudityDetectionActivate', function (req, res) {
+		if (req.body.adminPassword && req.body.adminPassword == managerConfigDB.getData('/').adminPassword) {
+			managerConfigDB.push('/', {
+				nudityDetection: 'on'
+			}, false);
+			res.send('Child mode has been activated successfuly ;)');
+		} else {
+			res.send('Authentication failed :(');
+		}
+	});
+	app.post('/nudityDetectionDeactivate', function (req, res) {
+		if (req.body.adminPassword && req.body.adminPassword == managerConfigDB.getData('/').adminPassword) {
+			managerConfigDB.push('/', {
+				nudityDetection: 'off'
+			}, false);
+			res.send('Child mode has been deactivated successfuly ;)');
+		} else {
+			res.send('Authentication failed :(');
+		}
+	});
+	app.get('/nudityDetectionStatus', function (req, res) {
+		res.send(managerConfigDB.getData('/').nudityDetection);
 	});
 	app.get('/adminPasswordStatus', function (req, res) {
 		if (managerConfigDB.getData('/').adminPassword) {
