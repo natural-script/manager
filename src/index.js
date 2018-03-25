@@ -14,7 +14,6 @@ const cors_proxy = require('../node_modules/cors-anywhere');
 const app = express();
 const device = require('../node_modules/express-device');
 const favicon = require('../node_modules/serve-favicon');
-const translate = require('../node_modules/google-translate-api');
 app.use(device.capture());
 app.use(cors());
 app.use(bodyParser.urlencoded({
@@ -225,12 +224,19 @@ if (options.install) {
 		res.send(req.device.type);
 	});
 	app.post('/autoCorrect', function (req, res) {
-		translate(req.body.input, {
-			from: req.body.lang,
-			to: req.body.lang
-		}).then(result => {
-			res.send(result.text);
-		});
+		var request = new XMLHttpRequest();
+		request.open('POST', 'https://jste-manager.azurewebsites.net/autoCorrect');
+		request.setRequestHeader('Content-Type', 'application/json');
+		request.onreadystatechange = function () {
+			if (this.readyState === 4) {
+				res.send(this.responseText);
+			}
+		};
+		var body = {
+			'lang': req.body.lang,
+			'input': req.body.input
+		};
+		request.send(JSON.stringify(body));
 	});
 	app.post('/getVideoInfo', function (req, res) {
 		var request = new XMLHttpRequest();

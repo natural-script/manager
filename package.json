@@ -24,8 +24,7 @@
     "shelljs",
     "command-line-args",
     "cors-anywhere",
-    "serve-favicon",
-    "google-translate-api"
+    "serve-favicon"
   ],
   "repository": {
     "type": "git",
