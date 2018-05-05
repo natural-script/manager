@@ -225,7 +225,7 @@ if (options.install) {
 	});
 	app.post('/autoCorrect', function (req, res) {
 		var request = new XMLHttpRequest();
-		request.open('POST', 'https://jste-manager.azurewebsites.net/autoCorrect');
+		request.open('POST', 'https://jste-manager.herokuapp.com/autoCorrect');
 		request.setRequestHeader('Content-Type', 'application/json');
 		request.onreadystatechange = function () {
 			if (this.readyState === 4) {
