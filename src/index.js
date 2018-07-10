@@ -112,7 +112,7 @@ if (options.install) {
 		console.log("");
 	}
 } else {
-	app.use(staticGzip(/(framework\.min\.html)$/));
+	app.use(staticGzip(/(naturalScript\.min\.js)$/));
 	app.use(express.static(root));
 	var server = app.listen(5050);
 	app.post('/setAdminPassword', function (req, res) {
