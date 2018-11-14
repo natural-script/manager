@@ -9,23 +9,23 @@
     "build": "node build.js",
     "test": "node build.js"
   },
-  "dependencies": [
-    "express",
-    "http-static-gzip-regexp",
-    "cors",
-    "appdirectory",
-    "node-json-db",
-    "remote-file-size",
-    "xmlhttprequest",
-    "body-parser",
-    "express-device",
-    "pkg",
-    "figlet",
-    "shelljs",
-    "command-line-args",
-    "cors-anywhere",
-    "serve-favicon"
-  ],
+  "dependencies": {
+    "express": "",
+    "http-static-gzip-regexp": "",
+    "cors": "",
+    "appdirectory": "",
+    "node-json-db": "",
+    "remote-file-size": "",
+    "xmlhttprequest": "",
+    "body-parser": "",
+    "express-device": "",
+    "pkg": "",
+    "figlet": "",
+    "shelljs": "",
+    "command-line-args": "",
+    "cors-anywhere": "",
+    "serve-favicon": ""
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/project-jste/manager"
@@ -35,13 +35,13 @@
       "src/assets/*"
     ],
     "targets": [
-      "node9-linux-x86",
-      "node9-linux-x64",
-      "node9-alpine-x64",
-      "node9-win-x86",
-      "node9-win-x64",
-      "node9-macos-x86",
-      "node9-macos-x64"
+      "node-latest-linux-x86",
+      "node-latest-linux-x64",
+      "node-latest-alpine-x64",
+      "node-latest-win-x86",
+      "node-latest-win-x64",
+      "node-latest-macos-x86",
+      "node-latest-macos-x64"
     ]
   },
   "keywords": [
