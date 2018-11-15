@@ -1,5 +1,7 @@
 # Jste Manager
 
+[![Build Status](https://travis-ci.org/project-jste/manager.svg?branch=master)](https://travis-ci.org/project-jste/manager)
+
 Jste Manager is required to enjoy full experience Jste Framework and get the full benefit of all of its awesome and exclusive features.
 
 ## Compatibility

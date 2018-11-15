@@ -6,8 +6,8 @@
   "bin": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "build": "node build.js",
-    "test": "node build.js"
+    "build": "pkg ./src/index.js --out-path ./build -c ./package.json",
+    "test": "pkg ./src/index.js --out-path ./build -c ./package.json"
   },
   "dependencies": {
     "express": "",
